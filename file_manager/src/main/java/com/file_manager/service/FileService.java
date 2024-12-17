@@ -25,22 +25,36 @@ public class FileService {
 
 		}
 
-		// checks the user given file name,that target file parent (path) should STORE path
-		 
+		// checks the user given file name,that target file parent (path) should STORE
+		// path
+
+		/*
+		 * this create a file along in the store path using separator ex:- if file is
+		 * f.txt then C:\\Users\\Sreenivas Bandaru\\Desktop\\f1.txt
+		 */
 		File targetFile = new File(STORE + File.separator + file.getOriginalFilename());
+		
+		/*
+		 * this checks targetfile parent path is our provided path or not if not then
+		 * raise exception
+		 */
 		if (!Objects.equals(targetFile.getParent(), STORE)) {
 			throw new SecurityException("File name not correct!!!");
 
 		}
+		
+		/*this save file in provided path
+		 * replace_existing means if same file there then replace new file 
+		 * */
 		Files.copy(file.getInputStream(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
 	}
 
 	/* download the file */
 	public File downloadFile(String fileName) throws Exception {
-		log.info("downloadFile method entered: "+fileName);
+		log.info("downloadFile method entered: " + fileName);
 		if (fileName == null) {
-			
+
 			throw new NullPointerException("file name is null!!");
 		}
 		File downloadFile = new File(STORE + File.separator + fileName);
